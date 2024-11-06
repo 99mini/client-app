@@ -1,7 +1,6 @@
-"use client";
+'use client';
 
-import React from "react";
-import useExample from "@/hooks/useExample";
+import useExample from '@/hooks/useExample';
 
 const Example = () => {
   const exampleData = useExample();
