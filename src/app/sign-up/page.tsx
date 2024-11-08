@@ -1,4 +1,5 @@
 import Form from '@/components/sign-up/Form';
+
 import './style.css';
 
 const SignUp = () => {
