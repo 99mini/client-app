@@ -7,7 +7,12 @@ export async function POST(request: NextRequest) {
 
   console.log(req);
 
-  const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/sign-up`, { req });
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/sign-up`, req);
 
-  return NextResponse.json(req);
+  console.log(res);
+
+  if (res.status === 400) {
+    return NextResponse.error();
+  }
+  return NextResponse.json({ data: res.data.message });
 }
