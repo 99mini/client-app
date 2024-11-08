@@ -9,7 +9,7 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
   }
 
   const data = await axios.get(`https://api.plankton-hackathon.com/api/test/${slug}`);
-  console.log(data);
+
   if (!data) {
     return NextResponse.json({ error: 'Data not found' }, { status: 404 });
   }
