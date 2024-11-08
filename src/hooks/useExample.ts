@@ -10,12 +10,12 @@ const useExample = (): ExampleType | null => {
 
   useEffect(() => {
     const fetchIndex = async () => {
-      const res = await axios.get<{ message: string }>('/api/');
+      const res = await axios.get<{ data: string }>('/api/test/3');
 
       if (res.status === 200) {
         setExample({
           id: 1,
-          data: res.data.message,
+          data: res.data.data,
         });
       }
     };
