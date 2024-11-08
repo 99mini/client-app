@@ -4,7 +4,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <body>
         <header>
           <nav>
-            <a href="/">Home</a> | <a href="/about">About</a>
+            <a href="/">Home</a> | <a href="/about">About</a> | <a href="/login">Login</a>
           </nav>
         </header>
         <main>{children}</main>
