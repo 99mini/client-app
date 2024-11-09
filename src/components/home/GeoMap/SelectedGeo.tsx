@@ -26,7 +26,7 @@ const SelectedGeo = ({ geoData, sgg }: SelectedGeoProps) => {
       style={{
         color: 'red',
         weight: 2,
-        fillColor: 'pink',
+        fillColor: 'white',
       }}
     />
   );

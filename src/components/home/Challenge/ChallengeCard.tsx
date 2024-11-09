@@ -5,11 +5,12 @@ import './ChallengeCard.css';
 
 interface ChallengeCardProps {
   challenge: ChallengeType;
+  onClick: () => void;
 }
 
-const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
+const ChallengeCard = ({ challenge, onClick }: ChallengeCardProps) => {
   return (
-    <Card className="challenge-card">
+    <Card className="challenge-card" onClick={onClick}>
       <h2>{challenge.district}</h2>
       <p>{challenge.bigCategory}</p>
     </Card>

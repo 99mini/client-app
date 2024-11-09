@@ -1,0 +1,6 @@
+.MuiPaper-root.challenge-detail-card {
+  padding: 12px;
+
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}

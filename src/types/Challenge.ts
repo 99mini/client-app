@@ -6,3 +6,5 @@ export type ChallengeType = {
   bigCategory: 'string';
   smallCategory: 'string';
 };
+
+export type DetailChallengeType = {} & ChallengeType;

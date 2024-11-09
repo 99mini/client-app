@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 import { ChallengeType } from '@/types/Challenge';
 import ChallengeCard from './ChallengeCard';
 
+import ChallengeDetailCard from './ChallengeDetailCard';
 import './ChallengeList.css';
 
 const ChallengeList = () => {
   const [challenList, setChallengeList] = useState<ChallengeType[]>([]);
+  const [selected, setSelected] = useState<ChallengeType | null>(null);
 
   useEffect(() => {
     axios
@@ -22,16 +24,22 @@ const ChallengeList = () => {
       });
   }, []);
   return (
-    <div
-      style={{
-        overflowY: 'auto',
-      }}
-    >
-      <h1>Challenge List</h1>
+    <div>
       <ul className="challenge-list">
-        {challenList.map((challenge) => (
-          <ChallengeCard key={challenge.id} challenge={challenge} />
-        ))}
+        {challenList.map((challenge) => {
+          if (selected?.district === challenge.district) {
+            return <ChallengeDetailCard key={challenge.district} challenge={challenge} />;
+          }
+          return (
+            <ChallengeCard
+              key={challenge.district}
+              challenge={challenge}
+              onClick={() => {
+                setSelected(challenge);
+              }}
+            />
+          );
+        })}
       </ul>
     </div>
   );

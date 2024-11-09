@@ -1,13 +1,12 @@
 'use client';
 
-import { SetStateAction, useEffect, useMemo, useState } from 'react';
+import { LatLng } from 'leaflet';
+import { SetStateAction, useEffect, useState } from 'react';
 import { GeoJSON } from 'react-leaflet';
 
 import center from '@turf/center';
 
 import { SggType } from '@/types/Geo';
-import { LatLng } from 'leaflet';
-import SelectedGeo from './SelectedGeo';
 
 const GeoJsonLayer = ({
   sgg,
@@ -17,17 +16,6 @@ const GeoJsonLayer = ({
   onChange: React.Dispatch<SetStateAction<SggType | null>>;
 }) => {
   const [geoData, setGeoData] = useState(null);
-
-  const selectedData: any = useMemo(() => {
-    if (!geoData || !sgg) {
-      return null;
-    }
-    return (
-      (geoData as { features: { properties: { sgg: string } }[] }).features.find(
-        (feature) => feature.properties.sgg === sgg.sgg
-      ) ?? null
-    );
-  }, [sgg, geoData]);
 
   useEffect(() => {
     fetch('/geo/seoul_sggnm.geojson')
@@ -42,7 +30,6 @@ const GeoJsonLayer = ({
 
   return (
     <>
-      <SelectedGeo geoData={geoData} sgg={sgg} />
       <GeoJSON
         data={
           {
@@ -77,8 +64,15 @@ const GeoJsonLayer = ({
         style={{
           color: 'blue',
           weight: 2,
-          fillColor: 'lightblue',
-          fillOpacity: 0.3,
+          opacity: 1,
+        }}
+      />
+      <GeoJSON
+        data={geoData}
+        style={{
+          color: 'blue',
+          fillColor: 'pink',
+          fillOpacity: 1,
         }}
         onEachFeature={(feature, layer) => {
           const centroid = center(feature).geometry.coordinates;

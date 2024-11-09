@@ -2,11 +2,11 @@
 
 import dynamic from 'next/dynamic';
 
-import ChallengeList from '@/components/home/ChallengeList';
+import ChallengeList from '@/components/home/Challenge/ChallengeList';
 
 import './page.css';
 
-const MapWithNoSSR = dynamic(() => import('../components/home/SeoulMap'), {
+const MapWithNoSSR = dynamic(() => import('../components/home/GeoMap/SeoulMap'), {
   ssr: false,
 });
 
