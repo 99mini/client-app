@@ -2,7 +2,11 @@
 
 import dynamic from 'next/dynamic';
 
-const MapWithNoSSR = dynamic(() => import('../components/SeoulMap'), {
+import ChallengeList from '@/components/home/ChallengeList';
+
+import './page.css';
+
+const MapWithNoSSR = dynamic(() => import('../components/home/SeoulMap'), {
   ssr: false,
 });
 
@@ -11,7 +15,10 @@ const Home = () => {
     <main>
       <h1>Welcome to the Home Page</h1>
       <p>This is the main page.</p>
-      <MapWithNoSSR />
+      <div className="home-layout">
+        <ChallengeList />
+        <MapWithNoSSR />
+      </div>
     </main>
   );
 };
