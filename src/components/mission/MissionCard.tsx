@@ -182,7 +182,7 @@ const MissionCard = () => {
         color="primary"
         style={{ margin: '0 auto', width: 'fit-content', backgroundColor: '#FCC4DD' }}
       >
-        <Link href={'/'}>{`Let's go Challenge`}</Link>
+        <Link href={'/challen-log'}>{`Let's go Challenge`}</Link>
       </Button>
     </div>
   );
