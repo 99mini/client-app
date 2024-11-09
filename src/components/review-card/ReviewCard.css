@@ -1,6 +1,6 @@
 .reviewBox {
-  background-color: bisque;
-  border-radius: 5%;
+  background-color: #ffeded;
+  border-radius: 12px;
   display: flex;
   flex-direction: row;
   padding: 30px;

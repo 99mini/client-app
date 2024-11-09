@@ -1,39 +1,74 @@
+'use client';
+import useProfile from '@/hooks/useProfile';
+import { useEffect, useState } from 'react';
+
+import { BoardCommentType, BoardType } from '@/types/Board';
+import { Card } from '@mui/material';
+import axios from 'axios';
+import Image from 'next/image';
 import './ReviewCard.css';
 
 const ReviewCard = () => {
+  const { profile } = useProfile();
+  const [board, setBoard] = useState<
+    {
+      board: BoardType;
+      boardComments: BoardCommentType[];
+    }[]
+  >([]);
+
+  useEffect(() => {
+    if (!profile) {
+      return;
+    }
+    axios
+      .get('/api/boards', {
+        headers: {
+          Authorization: `Bearer ${profile.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setBoard(res.data);
+      });
+  }, [profile]);
+
   return (
-    <span className="reviewBox">
-      <div>
-        <div style={{ fontSize: 15, fontWeight: 350, paddingBottom: 1 }}>강남구/음식</div>
-        <div style={{ fontSize: 25, fontWeight: 600, paddingBottom: 5 }}>제가 첫번째 챌린지 성공자입니다.^^</div>
-        <div className="photo">
-          <img src="/asset/sampleImage.png" alt="review_photo" className="review-photo" />
-        </div>
-      </div>
-      <div className="detailBox">
-        <div>
-          <div className="profileBox">
-            <div className="profileOwner">
-              <img src="/asset/sampleImage.png" alt="review_photo" className="photo" />
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 20,
+      }}
+    >
+      {board.map((data) => (
+        <Card className="reviewBox" key={data.board.id}>
+          <div>
+            <div style={{ fontSize: 25, fontWeight: 600, paddingBottom: 5 }}>{data.board.title}</div>
+            <div className="photo">
+              <Image src={data.board.image} alt="review_photo" className="review-photo" width={300} height={150} />
             </div>
-            <div style={{ fontSize: 30, paddingLeft: 15, fontWeight: 500 }}>Nickname</div>
           </div>
-          <div className="detail">
-            디테일한 리뷰 내용입니다.디테일한 리뷰 내용입니다.디테일한 리뷰 내용입니다.디테일한 리뷰 내용입니다.디테일한
-            리뷰 내용입니다.
-          </div>
-        </div>
-        <div style={{ backgroundColor: 'pink', borderRadius: 20 }}>
-          <div className="profileBox">
-            <div className="profileUser">
-              <img src="/asset/sampleImage.png" alt="review_photo" className="photo" />
+          <div className="detailBox">
+            <div>
+              <div className="profileBox">
+                <div style={{ fontSize: 30, fontWeight: 500 }}>{data.board.nickName}</div>
+              </div>
+              <div className="detail">{data.board.writingText}</div>
             </div>
-            <div style={{ fontSize: 20, paddingLeft: 15 }}>Nickname</div>
+            <div style={{ borderRadius: 12 }}>
+              <div className="detail" style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 12 }}>
+                {data.boardComments.map((comment) => (
+                  <Card key={comment.id} style={{ padding: 12, borderRadius: 16 }}>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>{comment.nickName}</div>
+                    <div>{comment.comment}</div>
+                  </Card>
+                ))}
+              </div>
+            </div>
           </div>
-          <div className="detail">댓글입니다.댓글입니다.댓글입니다.댓글입니다.댓글입니다.</div>
-        </div>
-      </div>
-    </span>
+        </Card>
+      ))}
+    </div>
   );
 };
 export default ReviewCard;

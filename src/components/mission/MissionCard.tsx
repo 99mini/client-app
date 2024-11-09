@@ -57,7 +57,7 @@ const MissionOpenCard = ({
         <>
           <CardContent style={{ border: 'none' }}>
             <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-              {`${name} Nice to meet you! I'll tell you the mission of the [${romanizeAddress(district ?? '')}(${district}) / ${bigCategory}] Challenge!`}
+              {`${name} Nice to meet you! I'll tell you the mission of the [${romanizeAddress(district ?? '')}(${district}) / ${koreanToEnglishCategory(bigCategory ?? '')}] Challenge!`}
             </Typography>
             <Typography
               variant="h6"
@@ -163,7 +163,7 @@ const MissionCard = () => {
                 style={{ maxWidth: 'unset' }}
               />
               <MissionOpenCard
-                name={profile?.email ?? ''}
+                name={profile?.nickName ?? ''}
                 district={district}
                 bigCategory={bigCategory}
                 mission={mission}
