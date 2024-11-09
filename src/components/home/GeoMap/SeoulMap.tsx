@@ -35,7 +35,7 @@ const SeoulMap = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            <GeoJsonLayer sgg={sgg} onChange={setSgg} />
+            <GeoJsonLayer onChange={setSgg} />
 
             {sgg && (
               <SeoulPopup

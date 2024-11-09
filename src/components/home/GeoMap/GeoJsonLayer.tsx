@@ -8,13 +8,7 @@ import center from '@turf/center';
 
 import { SggType } from '@/types/Geo';
 
-const GeoJsonLayer = ({
-  sgg,
-  onChange,
-}: {
-  sgg: SggType | null;
-  onChange: React.Dispatch<SetStateAction<SggType | null>>;
-}) => {
+const GeoJsonLayer = ({ onChange }: { onChange: React.Dispatch<SetStateAction<SggType | null>> }) => {
   const [geoData, setGeoData] = useState(null);
 
   useEffect(() => {
@@ -30,6 +24,7 @@ const GeoJsonLayer = ({
 
   return (
     <>
+      {/* 아웃 바운드 화이트 배경  */}
       <GeoJSON
         data={
           {
@@ -58,7 +53,7 @@ const GeoJsonLayer = ({
           weight: 0,
         }}
       />
-      {/* 지도 영역 */}
+      {/* 지도 영역 - 테두리 */}
       <GeoJSON
         data={geoData}
         style={{
@@ -67,6 +62,7 @@ const GeoJsonLayer = ({
           opacity: 1,
         }}
       />
+      {/* 지도 영역 */}
       <GeoJSON
         data={geoData}
         style={{
@@ -90,10 +86,6 @@ const GeoJsonLayer = ({
               });
             },
             mouseout: async () => {
-              if (!sgg) {
-                return;
-              }
-
               onChange(null);
             },
           });
