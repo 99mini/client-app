@@ -1,0 +1,18 @@
+.container {
+  background-color: red;
+  height: calc(100vh - 80px);
+  width: 100%;
+}
+.sampleImage {
+  position: absolute;
+  height: calc(100vh - 80px);
+  top: 50%;
+  left: 22%;
+}
+.textBox {
+  position: absolute;
+  height: calc(100vh - 80px);
+  top: 36%;
+  left: 45%;
+  border-color: black;
+}
