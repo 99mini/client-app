@@ -1,5 +1,9 @@
 import { romanize } from 'es-hangul';
 
+function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /**
  *
  * @param address
@@ -13,6 +17,20 @@ import { romanize } from 'es-hangul';
 export function romanizeAddress(address: string): string {
   const roma = romanize(address);
   const ret = `${roma[0].toUpperCase()}${roma.slice(1, roma.length - 2)}-${roma.slice(roma.length - 2)}`;
+  return ret;
+}
+
+export function romanizeAddressWithSpace(address: string): string {
+  const splited = address.split(' ');
+  const ret = splited
+    .map((s) => {
+      if (s[s.length - 1] === '로' || s[s.length - 1] === '구') {
+        return romanizeAddress(s);
+      }
+      return capitalizeFirstLetter(romanize(s));
+    })
+    .join(' ');
+
   return ret;
 }
 

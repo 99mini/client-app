@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { ChallengeType, DetailChallengeType } from '@/types/Challenge';
 
+import { koreanToEnglishCategory, romanizeAddress, romanizeAddressWithSpace } from '@/utils/i11n';
 import './ChallengeDetailCard.css';
 
 interface ChallengeDetailCardProps {
@@ -45,8 +46,21 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
 
   return (
     <Card ref={contentRef} className="challenge-detail-card" style={{ maxHeight: maxHeight }}>
-      <span>{`${challenge.district} / ${challenge.bigCategory}`}</span>
-      <h2>{challenge.text}</h2>
+      <div
+        style={{
+          width: '100%',
+          textAlign: 'center',
+        }}
+      >{`${romanizeAddress(challenge.district)} (${challenge.district}) / ${koreanToEnglishCategory(challenge.bigCategory)}`}</div>
+      <h2
+        style={{
+          textAlign: 'center',
+          fontSize: '2rem',
+          marginBottom: '1rem',
+        }}
+      >
+        {challenge.text}
+      </h2>
       {detailChallenge?.imageURL ? (
         <Image
           className="mission-thumnail"
@@ -67,7 +81,7 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
           <span className="mission-title">{'Mission'}</span>
           <Button className="mission-button">
             <Link href={`/challenge?district=${challenge.district}&bigCategory=${challenge.bigCategory}`}>
-              {'참가 신청 / 미션 확인'}
+              {'Let’s go Challenge'}
             </Link>
           </Button>
         </div>
@@ -76,7 +90,7 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
           {detailChallenge?.attractions.map((attraction) => (
             <li key={attraction.id} className="mission-item">
               <div className="mission-item-title">{attraction.attraction}</div>
-              <div className="mission-item-address">{attraction.address}</div>
+              <div className="mission-item-address">{`${romanizeAddressWithSpace(attraction.address)} (${attraction.address})`}</div>
             </li>
           ))}
         </ul>
