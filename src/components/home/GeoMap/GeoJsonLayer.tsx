@@ -8,7 +8,13 @@ import center from '@turf/center';
 
 import { SggType } from '@/types/Geo';
 
-const GeoJsonLayer = ({ onChange }: { onChange: React.Dispatch<SetStateAction<SggType | null>> }) => {
+const GeoJsonLayer = ({
+  sgg,
+  onChange,
+}: {
+  sgg: SggType | null;
+  onChange: React.Dispatch<SetStateAction<SggType | null>>;
+}) => {
   const [geoData, setGeoData] = useState(null);
 
   useEffect(() => {
@@ -57,7 +63,7 @@ const GeoJsonLayer = ({ onChange }: { onChange: React.Dispatch<SetStateAction<Sg
       <GeoJSON
         data={geoData}
         style={{
-          color: 'blue',
+          color: '#F0F0F0',
           weight: 2,
           opacity: 1,
         }}
@@ -66,8 +72,8 @@ const GeoJsonLayer = ({ onChange }: { onChange: React.Dispatch<SetStateAction<Sg
       <GeoJSON
         data={geoData}
         style={{
-          color: 'blue',
-          fillColor: 'pink',
+          color: '#F0F0F0',
+          fillColor: '#ABDAF4',
           fillOpacity: 1,
         }}
         onEachFeature={(feature, layer) => {
@@ -84,9 +90,6 @@ const GeoJsonLayer = ({ onChange }: { onChange: React.Dispatch<SetStateAction<Sg
                 sggnm: feature.properties.sggnm as string,
                 center: [point.y, point.x],
               });
-            },
-            mouseout: async () => {
-              onChange(null);
             },
           });
         }}

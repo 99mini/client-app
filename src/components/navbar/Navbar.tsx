@@ -13,7 +13,7 @@ const Navbar = () => {
     <header className="navbar-header">
       <nav className="navbar-nav">
         <Link href="/" className="nav-logo">
-          <Image src="/asset/logo.svg" alt="logo" width={274} height={120} />
+          <Image src="/asset/logo.svg" alt="logo" width={250} height={140} />
         </Link>
         <div className="navbar-leftside">
           <Link href="/challen-log" className="nav-link">

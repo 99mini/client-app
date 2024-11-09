@@ -4,7 +4,6 @@ import useProfile from '@/hooks/useProfile';
 import { MissionType } from '@/types/Challenge';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -13,6 +12,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { romanizeAddress } from '@/utils/i11n';
+import Image from 'next/image';
 import './MissionCard.css';
 
 const MissionTitle = ({
@@ -50,31 +50,35 @@ const MissionOpenCard = ({
 }) => {
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div className="mission-open-card">
       <Box sx={{ minWidth: 275 }}>
-        <Card variant="outlined">
-          <>
-            <CardContent>
-              <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-                {`Challen-Day | Hello User ${name}!`}
-              </Typography>
-              <Typography variant="h6" component="div">
-                {`Today's challenge that you selected [${district}/${bigCategory}] is ${'this'}!`}
-              </Typography>
-              <Typography variant="h6">
-                {`Good Luck!`}
-                <br />
-              </Typography>
-            </CardContent>
-            <CardActions>
-              {open ? (
-                <Typography>{mission.mission}</Typography>
-              ) : (
-                <Button size="small" onClick={() => setOpen(true)}>{`Click to Open!`}</Button>
-              )}
-            </CardActions>
-          </>
-        </Card>
+        <>
+          <CardContent style={{ border: 'none' }}>
+            <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
+              {`Challen-Day | Hello User ${name}!`}
+            </Typography>
+            <Typography variant="h6" component="div">
+              {`Today's challenge that you selected [${district}/${bigCategory}] is ${'this'}!`}
+            </Typography>
+            <Typography variant="h6">
+              {`Good Luck!`}
+              <br />
+            </Typography>
+          </CardContent>
+          <CardActions
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            {open ? (
+              <Typography>{mission.mission}</Typography>
+            ) : (
+              <Button size="small" onClick={() => setOpen(true)}>{`Click to Open!`}</Button>
+            )}
+          </CardActions>
+        </>
       </Box>
     </div>
   );
@@ -114,24 +118,35 @@ const MissionCard = () => {
   }, [district, bigCategory, profile?.accessToken]);
 
   return (
-    <>
+    <div className="mission-page">
       <MissionTitle district={district} bigCategory={bigCategory} missionText={"Today's Mission"} />
       {mission && (
         <div className="container">
           <div className="main-image">
-            <img src="/asset/sampleImage.png" alt="sampleImage" />
+            <Image src="/asset/mascot.png" alt="mascot" width={558} height={574} />
           </div>
+
           <div className="text-box">
-            <MissionOpenCard
-              name={profile?.email ?? ''}
-              district={district}
-              bigCategory={bigCategory}
-              mission={mission}
-            />
+            <div style={{ position: 'relative' }}>
+              <Image
+                className="balloon"
+                src="/asset/balloon.png"
+                alt="balloon"
+                width={358}
+                height={358}
+                style={{ maxWidth: 'unset' }}
+              />
+              <MissionOpenCard
+                name={profile?.email ?? ''}
+                district={district}
+                bigCategory={bigCategory}
+                mission={mission}
+              />
+            </div>
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 export default MissionCard;

@@ -1,34 +1,56 @@
-import { useMemo } from 'react';
+'use client';
+
+import useChallenge from '@/hooks/useChallenge';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { GeoJSON } from 'react-leaflet';
 
-import { SggType } from '@/types/Geo';
+const SelectedGeo = ({ sgg, sggnm }: { sgg: string; sggnm: string }) => {
+  const [geoData, setGeoData] = useState(null);
+  const challenge = useChallenge();
+  const router = useRouter();
 
-interface SelectedGeoProps {
-  geoData: any;
-  sgg: SggType | null;
-}
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      fetch(`/geo/seoul_${sgg}.geojson`)
+        .then((response) => response.json())
+        .then((data) => setGeoData(data))
+        .catch((error) => console.error('GeoJSON data loading error:', error));
+    }, 100);
 
-const SelectedGeo = ({ geoData, sgg }: SelectedGeoProps) => {
-  const selectedData: any | null = useMemo(() => {
-    if (!geoData || !sgg) {
-      return null;
-    }
-    return (
-      (geoData as { features: { properties: { sgg: string } }[] }).features.find(
-        (feature) => feature.properties.sgg === sgg.sgg
-      ) ?? null
-    );
-  }, [sgg, geoData]);
+    return () => {
+      clearTimeout(debounce);
+      setGeoData(null);
+    };
+  }, [sgg]);
+
+  if (!geoData || !sgg) {
+    return null;
+  }
 
   return (
-    <GeoJSON
-      data={selectedData}
-      style={{
-        color: 'red',
-        weight: 2,
-        fillColor: 'white',
-      }}
-    />
+    <>
+      {/* 지도 선택 영역 */}
+      <GeoJSON
+        data={geoData}
+        style={{
+          color: '#F0F0F0',
+          fillColor: '#06E5AD',
+          fillOpacity: 1,
+        }}
+        onEachFeature={(feature, layer) => {
+          layer.on('click', () => {
+            const selectedChallenge = challenge.find((challen) => challen.district === sggnm);
+            if (!selectedChallenge) {
+              return;
+            }
+            router.replace(
+              `/challenge?district=${selectedChallenge.district}&bigCategory=${selectedChallenge.bigCategory}`
+            );
+          });
+        }}
+      />
+    </>
   );
 };
 

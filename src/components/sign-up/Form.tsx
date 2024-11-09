@@ -5,6 +5,7 @@ import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import TextInput from '../textInput/TextInput';
 
@@ -17,6 +18,8 @@ const Form = () => {
   const [isValidPw, setIsValidPw] = useState(true);
   const [isPwConfirm, setIsPwConfirm] = useState(true);
   const [isValidNickName, setIsValidNickName] = useState(true);
+
+  const router = useRouter();
 
   function EmailConfirm() {
     axios.post('/api/auth/check-email-duplicate', { email: email }).then((res) => {
@@ -72,6 +75,7 @@ const Form = () => {
             .post('/api/auth/sign-up', { email: email, password: pw, nickName: nickName })
             .then((response) => {
               console.log(response.data);
+              router.replace('/login');
             })
             .catch((e) => {
               console.log(e);

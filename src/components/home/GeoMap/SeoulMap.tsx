@@ -11,6 +11,9 @@ import SeoulPopup from './SeoulPopup';
 
 import { romanizeAddress } from '@/utils/i11n';
 import { Typography } from '@mui/material';
+import SelectedGeo from './SelectedGeo';
+
+import useChallenge from '@/hooks/useChallenge';
 import 'leaflet/dist/leaflet.css';
 import './SeoulMap.css';
 
@@ -18,6 +21,7 @@ const center: LatLngExpression = [37.5665, 126.978]; // 서울의 위도와 경�
 
 const SeoulMap = () => {
   const [sgg, setSgg] = useState<SggType | null>(null);
+  const challenge = useChallenge();
 
   return (
     <div className="seoul-map-layout">
@@ -37,7 +41,9 @@ const SeoulMap = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            <GeoJsonLayer onChange={setSgg} />
+
+            <GeoJsonLayer sgg={sgg} onChange={setSgg} />
+            {sgg && <SelectedGeo sgg={sgg.sgg} sggnm={sgg.sggnm} />}
 
             {sgg && (
               <SeoulPopup
@@ -46,9 +52,22 @@ const SeoulMap = () => {
                   left: sgg.center[1],
                 }}
               >
-                <Typography variant="h4">{romanizeAddress(sgg.sggnm)}</Typography>
-                <br />
-                <Typography variant="h5">{`(${sgg.sggnm})`}</Typography>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography variant="h4">{romanizeAddress(sgg.sggnm)}</Typography>
+                  <Typography variant="h5">{`(${sgg.sggnm})`}</Typography>
+                  {challenge.length && (
+                    <>
+                      <Typography variant="h6">{`Category: ${challenge[0].bigCategory}`}</Typography>
+                      <Typography variant="h6">{`Mission: ${challenge[0].text}`}</Typography>
+                    </>
+                  )}
+                </div>
               </SeoulPopup>
             )}
           </MapContainer>

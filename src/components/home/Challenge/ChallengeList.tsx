@@ -1,10 +1,10 @@
 'use client';
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import MultiSelectBox from '@/components/MultiSelectBox';
 import { BIG_CATEGORY, GOGUN } from '@/constants/challenge';
+import useChallenge from '@/hooks/useChallenge';
 import { ChallengeType } from '@/types/Challenge';
 import ChallengeCard from './ChallengeCard';
 import ChallengeDetailCard from './ChallengeDetailCard';
@@ -12,26 +12,11 @@ import ChallengeDetailCard from './ChallengeDetailCard';
 import './ChallengeList.css';
 
 const ChallengeList = () => {
-  const [challenList, setChallengeList] = useState<ChallengeType[]>([]);
   const [selected, setSelected] = useState<ChallengeType | null>(null);
   const [selectedGogun, setSelectedGogun] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  useEffect(() => {
-    axios
-      .get('/api/challenge', {
-        params: {
-          district: selectedGogun,
-          category: selectedCategory,
-        },
-      })
-      .then((res) => {
-        setChallengeList(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, [selectedCategory, selectedGogun]);
+  const challenge = useChallenge(selectedGogun, selectedCategory);
 
   return (
     <div className="challenge-list-container">
@@ -50,16 +35,16 @@ const ChallengeList = () => {
         />
       </div>
       <ul className="challenge-list">
-        {challenList.map((challenge) => {
-          if (selected?.district === challenge.district) {
-            return <ChallengeDetailCard key={challenge.district} challenge={challenge} />;
+        {challenge.map((challen) => {
+          if (selected?.district === challen.district) {
+            return <ChallengeDetailCard key={challen.district} challenge={challen} />;
           }
           return (
             <ChallengeCard
-              key={challenge.district}
-              challenge={challenge}
+              key={challen.district}
+              challenge={challen}
               onClick={() => {
-                setSelected(challenge);
+                setSelected(challen);
               }}
             />
           );
