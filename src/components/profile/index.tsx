@@ -35,7 +35,7 @@ const ProfileContainer = () => {
   }, [profile]);
 
   return (
-    <div className="profile">
+    <div className="profile-page">
       <Card
         style={{
           display: 'flex',

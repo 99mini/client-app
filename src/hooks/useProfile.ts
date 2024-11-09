@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import session from '@/helpers/session';
 import { ProfileType } from '@/types/Auth';
@@ -9,48 +9,45 @@ import { ProfileType } from '@/types/Auth';
 const useProfile = () => {
   const [profile, setProfile] = useState<ProfileType | null>(null);
 
-  const refresh = async (token?: string) => {
-    const accessToken = token ?? session.get();
+  const refresh = useCallback(
+    async (token?: string) => {
+      const accessToken = token ?? session.get();
 
-    if (token) {
-      session.set(token);
-    }
+      if (token) {
+        session.set(token);
+      }
 
-    if (!accessToken) {
-      return;
-    }
+      if (!accessToken) {
+        return;
+      }
 
-    const res = await axios.get('/api/auth/profile', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+      const res = await axios.get('/api/auth/profile', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    if (!res.data) {
-      return;
-    }
+      if (!res.data) {
+        return;
+      }
 
-    if (res.status === 403 && res.data.code === 'JWT_EXPIRED') {
-      session.set(null);
-      setProfile(null);
-      return;
-    }
+      if (res.status === 403 && res.data.code === 'JWT_EXPIRED') {
+        session.set(null);
+        setProfile(null);
+        return;
+      }
 
-    setProfile({
-      ...res.data,
-      accessToken,
-    });
-  };
+      const newProfile = {
+        ...res.data,
+        accessToken,
+      };
 
-  useEffect(() => {
-    refresh();
-  }, []);
+      setProfile(newProfile);
 
-  useEffect(() => {
-    if (profile) {
-      session.set(profile.accessToken);
-    }
-  }, [profile]);
+      return newProfile;
+    },
+    [setProfile]
+  );
 
   return { profile, refresh };
 };

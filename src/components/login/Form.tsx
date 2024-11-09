@@ -11,6 +11,7 @@ import { useState } from 'react';
 import TextInput from '../textInput/TextInput';
 
 import session from '@/helpers/session';
+import useProfile from '@/hooks/useProfile';
 import Link from 'next/link';
 import './Form.css';
 
@@ -20,6 +21,8 @@ const Form = () => {
 
   const route = useRouter();
   const searchParams = useSearchParams();
+
+  const { refresh } = useProfile();
 
   const redirectTo = searchParams.get('redirectTo');
 
@@ -48,8 +51,13 @@ const Form = () => {
             .post('/api/auth/sign-in', { email: email, password: pw })
             .then(async (response) => {
               if (response.data) {
-                console.log(response.data);
                 session.set(response.data.accessToken);
+
+                const res = await refresh(response.data.accessToken);
+
+                if (!res.accessToken) {
+                  return;
+                }
 
                 if (redirectTo) {
                   const decoded = decodeURIComponent(redirectTo);

@@ -1,11 +1,11 @@
-.profile {
+.profile-page {
   display: flex;
   flex-direction: row;
 
   gap: 24px;
 
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
   margin: 24px 0;
 

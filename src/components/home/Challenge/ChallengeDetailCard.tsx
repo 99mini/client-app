@@ -22,9 +22,13 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setMaxHeight(`${contentRef.current.scrollHeight + 178}px`);
-    }
+    (async () => {
+      if (contentRef.current) {
+        setMaxHeight(`${contentRef.current.scrollHeight + 178}px`);
+        await new Promise((resolve) => setTimeout(resolve, 350));
+        setMaxHeight('unset');
+      }
+    })();
   }, [challenge, detailChallenge]);
 
   useEffect(() => {
@@ -74,7 +78,7 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
           }}
         />
       ) : (
-        <Skeleton className="mission-thumnail" variant="rectangular" width={400} height={178} />
+        <Skeleton className="mission-thumnail" variant="rectangular" width={400} height={276} />
       )}
       <div className="mission">
         <div className="mission-header">
