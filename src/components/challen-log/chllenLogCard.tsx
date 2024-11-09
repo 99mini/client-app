@@ -3,42 +3,27 @@
 import useProfile from '@/hooks/useProfile';
 import { GatheringType } from '@/types/Gathering';
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import JoinCard from '../join-card/JoinCard';
 
+interface GatheringResponse {
+  gatherings: GatheringType;
+  check: boolean;
+}
 const ChallenLogCard = () => {
-  const searchParams = useSearchParams();
-
   const { profile } = useProfile();
-
-  const id = Number(searchParams.get('id'));
-  const nickName = String(searchParams.get('nickName'));
-  const challengeId = Number(searchParams.get('challengeId'));
-  const text = String(searchParams.get('text'));
-  const maxCount = Number(searchParams.get('maxCount'));
-  const likeCount = Number(searchParams.get('likeCount'));
-
-  interface GatheringResponse {
-    gatherings: GatheringType;
-    check: boolean;
-  }
 
   const [gatheringData, setGatheringData] = useState<GatheringResponse[] | null>(null);
 
   useEffect(() => {
-    if (!profile?.accessToken || !id || !nickName || !challengeId || !text || !maxCount || !likeCount) {
+    console.log(profile);
+    if (!profile) {
       return;
     }
     axios
       .get<GatheringResponse[]>(`/api/challen-log`, {
         params: {
-          id,
-          nickName,
-          challengeId,
-          text,
-          maxCount,
-          likeCount,
+          challengeId: profile.challengeId,
         },
         headers: {
           Authorization: `Bearer ${profile.accessToken}`,
@@ -53,7 +38,8 @@ const ChallenLogCard = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [id, likeCount, maxCount, challengeId, text, nickName, profile?.accessToken]);
+  }, [profile]);
+
   return (
     <>
       {gatheringData?.map((data) => (
