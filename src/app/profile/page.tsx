@@ -1,5 +1,11 @@
+import ProfileContainer from '@/components/profile';
+
 const Profile = () => {
-  return <div>프로필</div>;
+  return (
+    <>
+      <ProfileContainer />
+    </>
+  );
 };
 
 export default Profile;

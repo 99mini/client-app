@@ -2,10 +2,16 @@ import axios from 'axios';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
+async function getCookieData() {
+  const headersList = headers();
+  const authorization = headersList.get('authorization');
+
+  return { authorization };
+}
+
 export async function GET(request: NextRequest) {
   try {
-    const headersList = headers();
-    const authorization = headersList.get('authorization');
+    const { authorization } = await getCookieData();
 
     const searchParams = request.nextUrl.searchParams;
     const district = searchParams.get('district');

@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 
 import { romanizeAddress } from '@/utils/i11n';
 import Image from 'next/image';
+import Link from 'next/link';
 import './MissionCard.css';
 
 const MissionTitle = ({
@@ -49,20 +50,37 @@ const MissionOpenCard = ({
   mission: MissionType;
 }) => {
   const [open, setOpen] = useState(false);
+  const { profile } = useProfile();
   return (
     <div className="mission-open-card">
       <Box sx={{ minWidth: 275 }}>
         <>
           <CardContent style={{ border: 'none' }}>
             <Typography gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-              {`Challen-Day | Hello User ${name}!`}
+              {`${name} Nice to meet you! I'll tell you the mission of the [${romanizeAddress(district ?? '')}(${district}) / ${bigCategory}] Challenge!`}
             </Typography>
-            <Typography variant="h6" component="div">
-              {`Today's challenge that you selected [${district}/${bigCategory}] is ${'this'}!`}
-            </Typography>
-            <Typography variant="h6">
-              {`Good Luck!`}
-              <br />
+            <Typography
+              variant="h6"
+              component="p"
+              style={{
+                whiteSpace: 'pre-line',
+                wordBreak: 'break-word',
+                fontSize: '1rem',
+              }}
+            >
+              {`The  team today! `}
+              <span
+                style={{
+                  color: profile?.team ? 'pink' : 'green',
+                  fontWeight: 'bold',
+                  fontSize: '1.5rem',
+                }}
+              >
+                {`${profile?.team ? 'PINK' : 'GREEN'}`}
+              </span>
+              {` team. Visit the restaurant list recommended by Challen-Day Seoul and write a certification post for the challenge!
+              And, there's another mission for you
+              I hope you achieve it in secret!`}
             </Typography>
           </CardContent>
           <CardActions
@@ -132,8 +150,8 @@ const MissionCard = () => {
                 className="balloon"
                 src="/asset/balloon.png"
                 alt="balloon"
-                width={358}
-                height={358}
+                width={538}
+                height={538}
                 style={{ maxWidth: 'unset' }}
               />
               <MissionOpenCard
@@ -146,7 +164,11 @@ const MissionCard = () => {
           </div>
         </div>
       )}
+      <Button variant="contained" color="primary" style={{ margin: '0 auto', width: 'fit-content' }}>
+        <Link href={'/'}>{`Let's go Challenge`}</Link>
+      </Button>
     </div>
   );
 };
+
 export default MissionCard;

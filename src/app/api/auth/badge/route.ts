@@ -12,7 +12,7 @@ async function getCookieData() {
 export async function GET(request: NextRequest) {
   const { authorization } = await getCookieData();
 
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/profile`, {
+  const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_HOST}/auth/badge`, {
     headers: {
       Authorization: authorization,
     },
