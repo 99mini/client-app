@@ -61,10 +61,23 @@ const ProfileContainer = () => {
           variant="h4"
           style={{
             color: grey[800],
+            fontSize: 16,
           }}
         >
           {profile?.email}
         </Typography>
+        <div
+          style={{
+            color: grey[800],
+            backgroundColor: '#FCC4DD',
+            borderRadius: 12,
+            padding: 8,
+            minWidth: 150,
+            textAlign: 'center',
+          }}
+        >
+          {`LV. ${profile?.level}`}
+        </div>
       </Card>
       <Card style={{ padding: 24, flex: 1, height: '100%', maxWidth: 400, backgroundColor: '#FFEEEE' }}>
         <Typography variant="h4" style={{ textAlign: 'center' }}>
