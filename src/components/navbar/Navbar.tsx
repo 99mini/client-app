@@ -16,6 +16,9 @@ const Navbar = () => {
           <Image src="/asset/logo.svg" alt="logo" width={250} height={140} />
         </Link>
         <div className="navbar-leftside">
+          <Link href="/about" className="nav-link">
+            {'challen-day?'}
+          </Link>
           <Link href="/challen-log" className="nav-link">
             {'challen-log'}
           </Link>
