@@ -9,7 +9,7 @@ const ChallenLog = () => {
   return (
     <Suspense fallback={<Skeleton variant="rectangular" width={'100vw'} height={'100vh'} />}>
       <div className="challen-log-container">
-        <span className="reviewCard">
+        <div className="reviewCard">
           <div className="titlebar">
             <span className="title" style={{ fontSize: 17, fontWeight: 550 }}>
               {'Succeeded people in the challenge'}
@@ -17,7 +17,7 @@ const ChallenLog = () => {
             <SetModal />
           </div>
           <ReviewCard />
-        </span>
+        </div>
         <div className="logCard">
           <ChallenLogCard />
         </div>

@@ -3,6 +3,8 @@
   flex-direction: row;
   gap: 24px;
 
+  justify-content: center;
+
   @media screen and (max-width: 1024px) {
     flex-direction: column;
   }
