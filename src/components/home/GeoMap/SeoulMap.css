@@ -1,8 +1,8 @@
 .seoul-map-layout {
   .seoul-map-sticky {
     position: sticky;
-    /* TODO: nav바 영역 빼기 */
-    top: calc(0px);
+
+    top: 168px;
 
     .seoul-map-container {
       position: relative;

@@ -14,3 +14,10 @@ export type DetailChallengeType = {
   mission: string;
   attractions: Omit<ChallengeType, 'text'>[];
 };
+
+export type MissionType = {
+  email: string;
+  team: number;
+  challengeId: number;
+  mission: string;
+};

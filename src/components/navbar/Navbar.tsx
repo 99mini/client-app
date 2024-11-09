@@ -20,7 +20,7 @@ const Navbar = () => {
             {'challen-log'}
           </Link>
           <Link href={profile?.accessToken ? '/profile' : '/login'} className="nav-link">
-            {profile?.accessToken ? '프로필 ' : '로그인'}
+            {profile?.accessToken ? 'Profile ' : 'Sign in'}
           </Link>
         </div>
       </nav>

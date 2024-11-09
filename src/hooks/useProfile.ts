@@ -30,6 +30,12 @@ const useProfile = () => {
       return;
     }
 
+    if (res.status === 403 && res.data.code === 'JWT_EXPIRED') {
+      session.set(null);
+      setProfile(null);
+      return;
+    }
+
     setProfile({
       ...res.data,
       accessToken,
@@ -39,6 +45,12 @@ const useProfile = () => {
   useEffect(() => {
     refresh();
   }, []);
+
+  useEffect(() => {
+    if (profile) {
+      session.set(profile.accessToken);
+    }
+  }, [profile]);
 
   return { profile, refresh };
 };

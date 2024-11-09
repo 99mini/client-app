@@ -6,4 +6,6 @@ export type SignRequestType = {
 export type ProfileType = {
   email: string;
   accessToken: string;
+  team: number;
+  challengeId: number;
 };

@@ -9,6 +9,8 @@ import { SggType } from '@/types/Geo';
 import GeoJsonLayer from './GeoJsonLayer';
 import SeoulPopup from './SeoulPopup';
 
+import { romanizeAddress } from '@/utils/i11n';
+import { Typography } from '@mui/material';
 import 'leaflet/dist/leaflet.css';
 import './SeoulMap.css';
 
@@ -44,8 +46,9 @@ const SeoulMap = () => {
                   left: sgg.center[1],
                 }}
               >
-                <h2>{sgg.sgg}</h2>
-                <p>{sgg.sggnm}</p>
+                <Typography variant="h4">{romanizeAddress(sgg.sggnm)}</Typography>
+                <br />
+                <Typography variant="h5">{`(${sgg.sggnm})`}</Typography>
               </SeoulPopup>
             )}
           </MapContainer>

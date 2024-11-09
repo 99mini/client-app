@@ -9,17 +9,26 @@ class Session {
     Session.instance = this;
   }
 
-  set(value: string) {
+  set(value: string | null) {
     this.token = value;
-    localStorage.setItem('session', value);
+    if (typeof window !== 'undefined' && window.localStorage !== undefined) {
+      if (value) {
+        localStorage.setItem('session', value);
+      } else {
+        localStorage.removeItem('session');
+      }
+    }
   }
 
   get() {
-    if (!this.token) {
-      this.token = localStorage.getItem('session');
+    if (typeof window !== 'undefined' && window.localStorage !== undefined) {
+      if (!this.token) {
+        this.token = localStorage.getItem('session');
+      }
+      return localStorage.getItem('session');
     }
 
-    return localStorage.getItem('session');
+    return this.token;
   }
 
   static get() {

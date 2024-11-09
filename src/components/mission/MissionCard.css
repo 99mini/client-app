@@ -1,15 +1,22 @@
-.container {
-  background-color: rgba(190, 51, 249, 0.374);
-  height: calc(100vh - 80px);
-  max-width: 100vw;
+.mission-card-title {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  padding: 16px 0;
+
+  justify-content: center;
+  align-items: center;
 }
-.sampleImage {
+
+.main-image {
   position: absolute;
   height: calc(100vh - 80px);
   top: 50%;
   left: 22%;
 }
-.textBox {
+
+.text-box {
   position: absolute;
   height: calc(100vh - 80px);
   top: 36%;

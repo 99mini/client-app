@@ -7,9 +7,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body>
         <Navbar />
-        <main>{children}</main>
-        <footer>
-          <p>© 2024 My App</p>
+        <main className="main-layout">{children}</main>
+        <footer className="main-footer">
+          <p>© 2024 plankton-hackathon: Team Lucky 7</p>
         </footer>
       </body>
     </html>

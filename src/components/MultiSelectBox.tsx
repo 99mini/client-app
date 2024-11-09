@@ -35,7 +35,9 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
 
     if (value.includes('clear')) {
       setOptions(['전체']);
-      onChange && onChange('');
+      if (onChange) {
+        onChange('');
+      }
       return;
     }
 

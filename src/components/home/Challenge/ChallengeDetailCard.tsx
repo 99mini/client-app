@@ -66,7 +66,9 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
         <div className="mission-header">
           <span className="mission-title">{'Mission'}</span>
           <Button className="mission-button">
-            <Link href={`/challenge/${challenge.id}`}>{'참가 신청 / 미션 확인'}</Link>
+            <Link href={`/challenge?district=${challenge.district}&bigCategory=${challenge.bigCategory}`}>
+              {'참가 신청 / 미션 확인'}
+            </Link>
           </Button>
         </div>
         <p className="mission-description">{detailChallenge?.mission}</p>
