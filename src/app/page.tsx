@@ -12,14 +12,10 @@ const MapWithNoSSR = dynamic(() => import('../components/home/SeoulMap'), {
 
 const Home = () => {
   return (
-    <main>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the main page.</p>
-      <div className="home-layout">
-        <ChallengeList />
-        <MapWithNoSSR />
-      </div>
-    </main>
+    <div className="home-layout">
+      <ChallengeList />
+      <MapWithNoSSR />
+    </div>
   );
 };
 
