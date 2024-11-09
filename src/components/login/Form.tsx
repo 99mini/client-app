@@ -47,32 +47,25 @@ const Form = () => {
         onSubmit={(e) => {
           e.preventDefault();
 
-          axios
-            .post('/api/auth/sign-in', { email: email, password: pw })
-            .then(async (response) => {
-              if (response.data) {
-                session.set(response.data.accessToken);
+          axios.post('/api/auth/sign-in', { email: email, password: pw }).then(async (response) => {
+            if (response.data) {
+              session.set(response.data.accessToken);
 
-                const res = await refresh(response.data.accessToken);
+              const res = await refresh(response.data.accessToken);
 
-                if (!res.accessToken) {
-                  return;
-                }
-
-                if (redirectTo) {
-                  const decoded = decodeURIComponent(redirectTo);
-
-                  route.replace(decoded);
-                } else {
-                  route.replace('/');
-                }
+              if (!res.accessToken) {
+                return;
               }
-            })
-            .catch((e) => {
-              if (e.status === 403) {
-                console.log(e.code);
+
+              if (redirectTo) {
+                const decoded = decodeURIComponent(redirectTo);
+
+                route.replace(decoded);
+              } else {
+                route.replace('/');
               }
-            });
+            }
+          });
         }}
       >
         <TextInput label="Email" value={email} onChange={setEmail} />

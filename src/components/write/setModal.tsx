@@ -51,7 +51,6 @@ export default function SetModal() {
     e.preventDefault();
 
     if (!title || !content || !image) {
-      console.log('Please complete all fields');
       return;
     }
 
@@ -66,9 +65,8 @@ export default function SetModal() {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('Post submitted successfully:', response.data);
     } catch (error) {
-      console.error('Error submitting post:', error);
+      console.error(error);
     }
   };
 

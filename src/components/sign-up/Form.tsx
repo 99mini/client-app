@@ -30,7 +30,6 @@ const Form = () => {
           setIsValidEmail(false);
         } else {
           setIsValidEmail(true);
-          console.log(email);
         }
       } else {
         setIsValidEmail(false);
@@ -47,12 +46,10 @@ const Form = () => {
       setIsPwConfirm(false);
     } else {
       setIsValidPw(true);
-      console.log(pw);
     }
   }
   function NicknameConfirm() {
     axios.post('/api/auth/check-nickname-duplicate', { nickName: nickName }).then((res) => {
-      console.log(res.data);
       if (res.status === 200) {
         setIsValidNickName(true);
       } else {
@@ -82,20 +79,11 @@ const Form = () => {
         autoComplete="off"
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(email, pw);
+
           if (isValidEmail && isValidPw && isPwConfirm && isValidNickName) {
-            axios
-              .post('/api/auth/sign-up', { email: email, password: pw, nickName: nickName })
-              .then((response) => {
-                console.log(response.data);
-                router.replace('/login');
-              })
-              .catch((e) => {
-                console.log(e);
-              });
-            console.log(true);
-          } else {
-            console.log(false);
+            axios.post('/api/auth/sign-up', { email: email, password: pw, nickName: nickName }).then((response) => {
+              router.replace('/login');
+            });
           }
         }}
       >

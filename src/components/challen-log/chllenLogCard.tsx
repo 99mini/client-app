@@ -16,7 +16,6 @@ const ChallenLogCard = () => {
   const [gatheringData, setGatheringData] = useState<GatheringResponse[] | null>(null);
 
   useEffect(() => {
-    console.log(profile);
     if (!profile) {
       return;
     }
