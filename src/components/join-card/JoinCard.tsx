@@ -1,11 +1,13 @@
 'use client';
 
+import useProfile from '@/hooks/useProfile';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import axios from 'axios';
 import * as React from 'react';
 import { useState } from 'react';
 import './JoinCard.css';
@@ -20,6 +22,8 @@ interface Props {
 }
 
 const JoinCard = ({ id, nickName, text, challengeId, maxCount, likeCount }: Props) => {
+  const { profile } = useProfile();
+
   const Profile = () => {
     return (
       <div className="profileBox">
@@ -51,8 +55,24 @@ const JoinCard = ({ id, nickName, text, challengeId, maxCount, likeCount }: Prop
                   <Button
                     variant="outlined"
                     size="small"
-                    onClick={(e) => {
-                      setCount(count + 1);
+                    onClick={async (e) => {
+                      if (!profile) {
+                        return;
+                      }
+                      axios
+                        .get(`/api/gathering/join`, {
+                          params: {
+                            id: id,
+                          },
+                          headers: {
+                            Authorization: `Bearer ${profile.accessToken}`,
+                          },
+                        })
+                        .then((res) => {
+                          if (res.data.status === 200) {
+                            setCount(count + 1);
+                          }
+                        });
                     }}
                   >{`Join`}</Button>
                 </CardActions>

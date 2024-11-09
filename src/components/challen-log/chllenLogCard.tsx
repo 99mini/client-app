@@ -21,7 +21,7 @@ const ChallenLogCard = () => {
       return;
     }
     axios
-      .get<GatheringResponse[]>(`/api/challen-log`, {
+      .get<GatheringResponse[]>(`/api/gathering`, {
         params: {
           challengeId: profile.challengeId,
         },
