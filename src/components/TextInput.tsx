@@ -1,32 +1,31 @@
 'use client';
 
+import TextField from '@mui/material/TextField';
 import { useState } from 'react';
 import './TextInput.css';
 
 interface Props {
-  placeholder: string;
+  label: string;
   value: string;
   onChange: (value: string) => void;
   type?: string;
 }
 
-const TextInput = ({ placeholder, value, onChange, type = 'text' }: Props) => {
+const TextInput = ({ label, value, onChange, type = 'text' }: Props) => {
   const [data, setData] = useState('');
 
   return (
-    <p>
-      <label>{placeholder}</label>
-      <br />
-      <input
+    <>
+      <TextField
+        value={value}
+        label={label}
         type={type}
-        placeholder={placeholder}
-        value={value ?? data}
+        variant="standard"
         onChange={(e) => {
-          setData(e.target.value);
           onChange(e.target.value);
         }}
       />
-    </p>
+    </>
   );
 };
 

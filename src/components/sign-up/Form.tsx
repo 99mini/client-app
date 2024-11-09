@@ -1,10 +1,12 @@
 'use client';
 
 import { validateEmail, validatePassword } from '@/utils/regex';
+import SendIcon from '@mui/icons-material/Send';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useState } from 'react';
 import TextInput from '../TextInput';
-import './Form.css';
 
 const Form = () => {
   const [email, setEmail] = useState('');
@@ -14,15 +16,23 @@ const Form = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidPw, setIsValidPw] = useState(true);
   const [isPwConfirm, setIsPwConfirm] = useState(true);
+  const [isValidNickName, setIsValidNickName] = useState(true);
 
   function EmailConfirm() {
-    if (!validateEmail(email)) {
-      alert('Confirm your Email!');
-      setIsValidEmail(false);
-    } else {
-      setIsValidEmail(true);
-      console.log(email);
-    }
+    axios.post('/api/auth/check-email-duplicate', { email: email }).then((res) => {
+      if (res.status == 200) {
+        if (!validateEmail(email)) {
+          alert('Confirm your Email!');
+          setIsValidEmail(false);
+        } else {
+          setIsValidEmail(true);
+          console.log(email);
+        }
+      } else {
+        setIsValidEmail(false);
+        alert('Fail check-email-duplication');
+      }
+    });
   }
   function PwConfirm() {
     if (!validatePassword(pw)) {
@@ -36,30 +46,66 @@ const Form = () => {
       console.log(pw);
     }
   }
+  function NicknameConfirm() {
+    axios.post('/api/auth/check-nickname-duplicate', { nickName: nickName }).then((res) => {
+      console.log(res.data);
+      if (res.status === 200) {
+        setIsValidNickName(true);
+      } else {
+        setIsValidNickName(false);
+        alert('Same Nickname');
+      }
+    });
+  }
 
   return (
-    <form
+    <Box
+      component="form"
+      sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+      noValidate
+      autoComplete="off"
       onSubmit={(e) => {
         e.preventDefault();
         console.log(email, pw);
-        if (isValidEmail && isValidPw && isPwConfirm) {
-          axios.post('/api/auth/sign-up', { email: email, password: pw });
+        if (isValidEmail && isValidPw && isPwConfirm && isValidNickName) {
+          axios
+            .post('/api/auth/sign-up', { email: email, password: pw, nickName: nickName })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
           console.log(true);
         } else {
           console.log(false);
         }
       }}
     >
-      <TextInput placeholder="nickname" value={nickName} onChange={setNickName} />
-      <TextInput placeholder="email address" value={email} onChange={setEmail} />
-      <input type="button" value="이메일 확인" onClick={EmailConfirm} />
-      <TextInput placeholder="password" value={pw} onChange={setPw} type="password" />
-      <TextInput placeholder="password confirmation" value={pwConfirm} onChange={setPwConfirm} type="password" />
-      <input type="button" value="비밀번호 확인" onClick={PwConfirm} />
-      <p>
-        <input type="submit" />
-      </p>
-    </form>
+      <Box>
+        <TextInput label="nickname" value={nickName} onChange={setNickName} />
+        <Button variant="text" onClick={NicknameConfirm}>
+          닉네임 중복 확인
+        </Button>
+      </Box>
+      <Box>
+        <TextInput label="Email" value={email} onChange={setEmail} />
+        <Button variant="text" onClick={EmailConfirm}>
+          이메일 양식 확인
+        </Button>
+      </Box>
+      <Box>
+        <TextInput label="password" value={pw} onChange={setPw} type="password" />
+        <br />
+        <TextInput label="password confirmation" value={pwConfirm} onChange={setPwConfirm} type="password" />
+        <Button variant="text" onClick={PwConfirm}>
+          비밀번호 확인
+        </Button>
+      </Box>
+      <Button variant="contained" endIcon={<SendIcon />} type="submit">
+        Send
+      </Button>
+    </Box>
   );
 };
 
