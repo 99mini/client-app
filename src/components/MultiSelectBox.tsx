@@ -1,3 +1,4 @@
+import { koreanToEnglishCategory, romanizeAddress } from '@/utils/i11n';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import FormControl from '@mui/material/FormControl';
@@ -34,7 +35,7 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
     } = event;
 
     if (value.includes('clear')) {
-      setOptions(['전체']);
+      setOptions(['All']);
       if (onChange) {
         onChange('');
       }
@@ -42,8 +43,8 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
     }
 
     setOptions((prev) => {
-      if (prev.includes('전체')) {
-        return typeof value === 'string' ? value.split(',') : value.filter((v) => v !== '전체');
+      if (prev.includes('All')) {
+        return typeof value === 'string' ? value.split(',') : value.filter((v) => v !== 'All');
       }
       return typeof value === 'string' ? value.split(',') : value;
     });
@@ -74,12 +75,22 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
           )}
           MenuProps={MenuProps}
         >
-          <MenuItem value={'clear'}>{'전체 선택'}</MenuItem>
-          {givenOptions.map((name) => (
-            <MenuItem key={name} value={name}>
-              {name}
-            </MenuItem>
-          ))}
+          <MenuItem value={'clear'}>{'All'}</MenuItem>
+          {givenOptions.map((name) => {
+            const isCategory = koreanToEnglishCategory(name) != name;
+            if (name === 'All') {
+              return (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              );
+            }
+            return (
+              <MenuItem key={name} value={name}>
+                {isCategory ? koreanToEnglishCategory(name) : `${romanizeAddress(name)} (${name})`}
+              </MenuItem>
+            );
+          })}
         </Select>
       </FormControl>
     </div>

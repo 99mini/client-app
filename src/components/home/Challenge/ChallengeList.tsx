@@ -21,16 +21,11 @@ const ChallengeList = () => {
   return (
     <div className="challenge-list-container">
       <div className="chanllenge-option">
+        <MultiSelectBox title={'Region'} options={[...GOGUN, 'All']} defaultValue={'All'} onChange={setSelectedGogun} />
         <MultiSelectBox
-          title={'지역 선택'}
-          options={[...GOGUN, '전체']}
-          defaultValue={'전체'}
-          onChange={setSelectedGogun}
-        />
-        <MultiSelectBox
-          title={'카테고리 선택'}
-          options={[...BIG_CATEGORY, '전체']}
-          defaultValue={'전체'}
+          title={'Category'}
+          options={[...BIG_CATEGORY, 'All']}
+          defaultValue={'All'}
           onChange={setSelectedCategory}
         />
       </div>

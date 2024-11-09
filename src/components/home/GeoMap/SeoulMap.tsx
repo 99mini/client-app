@@ -9,12 +9,13 @@ import { SggType } from '@/types/Geo';
 import GeoJsonLayer from './GeoJsonLayer';
 import SeoulPopup from './SeoulPopup';
 
-import { romanizeAddress } from '@/utils/i11n';
-import { Typography } from '@mui/material';
+import { koreanToEnglishCategory, romanizeAddress } from '@/utils/i11n';
+import { Box, Button, Typography } from '@mui/material';
 import SelectedGeo from './SelectedGeo';
 
 import useChallenge from '@/hooks/useChallenge';
 import 'leaflet/dist/leaflet.css';
+import Link from 'next/link';
 import './SeoulMap.css';
 
 const center: LatLngExpression = [37.5665, 126.978]; // 서울의 위도와 경도
@@ -59,11 +60,28 @@ const SeoulMap = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Typography variant="h4">{romanizeAddress(sgg.sggnm)}</Typography>
-                  <Typography variant="h5">{`(${sgg.sggnm})`}</Typography>
+                  <Typography
+                    variant="h4"
+                    style={{
+                      fontSize: '1.5rem',
+                    }}
+                  >
+                    {romanizeAddress(sgg.sggnm)}
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      fontSize: '1rem',
+                    }}
+                  >{`(${sgg.sggnm})`}</Typography>
                   {challenge.length && (
                     <>
-                      <Typography variant="h6">{`Category: ${challenge[0].bigCategory}`}</Typography>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          fontSize: '1rem',
+                        }}
+                      >{`Category: ${koreanToEnglishCategory(challenge[0].bigCategory)}`}</Typography>
                       <Typography variant="h6">{`Mission: ${challenge[0].text}`}</Typography>
                     </>
                   )}
@@ -72,6 +90,25 @@ const SeoulMap = () => {
             )}
           </MapContainer>
         </div>
+        <Box
+          style={{
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Button
+            style={{
+              fontSize: '2rem',
+              color: 'white',
+              backgroundColor: '#15E5B0',
+              borderRadius: '12px',
+              padding: '10px 20px',
+            }}
+          >
+            <Link href="/chalen-log">{'Challenge Seoul'}</Link>
+          </Button>
+        </Box>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ import axios from 'axios';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { romanizeAddress } from '@/utils/i11n';
+import { koreanToEnglishCategory, romanizeAddress } from '@/utils/i11n';
 import Image from 'next/image';
 import Link from 'next/link';
 import './MissionCard.css';
@@ -30,7 +30,7 @@ const MissionTitle = ({
       <Typography
         gutterBottom
         sx={{ color: 'text.secondary', fontSize: 14 }}
-      >{`${romanizeAddress(district ?? '')}(${district}) / ${bigCategory}`}</Typography>
+      >{`${romanizeAddress(district ?? '')}(${district}) / ${koreanToEnglishCategory(bigCategory ?? '')}`}</Typography>
       <Typography variant="h3" component="div">
         {missionText}
       </Typography>
