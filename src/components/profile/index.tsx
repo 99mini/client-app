@@ -4,6 +4,7 @@ import useProfile from '@/hooks/useProfile';
 import { Box, Card, Typography } from '@mui/material';
 import Image from 'next/image';
 
+import { grey } from '@mui/material/colors';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './style.css';
@@ -47,7 +48,22 @@ const ProfileContainer = () => {
         }}
       >
         <Image src={'/asset/profile.svg'} alt={'profile'} width={400} height={340} />
-        <Typography variant="h4">{profile?.email}</Typography>
+        <Typography
+          variant="h4"
+          style={{
+            fontSize: 24,
+          }}
+        >
+          {profile?.nickName}
+        </Typography>
+        <Typography
+          variant="h4"
+          style={{
+            color: grey[800],
+          }}
+        >
+          {profile?.email}
+        </Typography>
       </Card>
       <Card style={{ padding: 24, flex: 1, height: '100%', maxWidth: 400, backgroundColor: '#FFEEEE' }}>
         <Typography variant="h4" style={{ textAlign: 'center' }}>

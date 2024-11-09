@@ -8,4 +8,8 @@ export type ProfileType = {
   accessToken: string;
   team: number;
   challengeId: number;
+  nickName: string;
+  level: number;
+  challengeCount: number;
+  miniGameCount: number;
 };
