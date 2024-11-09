@@ -19,8 +19,8 @@ const Navbar = () => {
           <Link href="/challen-log" className="nav-link">
             {'challen-log'}
           </Link>
-          <Link href={profile ? 'profile' : '/login'} className="nav-link">
-            {'로그인'}
+          <Link href={profile?.accessToken ? '/profile' : '/login'} className="nav-link">
+            {profile?.accessToken ? '프로필 ' : '로그인'}
           </Link>
         </div>
       </nav>

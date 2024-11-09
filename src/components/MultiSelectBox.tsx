@@ -5,7 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import * as React from 'react';
+import { useState } from 'react';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -21,12 +21,12 @@ const MenuProps = {
 interface MultiSelectBoxProps {
   title: string;
   options: string[];
-  defaultValue?: string[];
-  onChange?: (value: string | string[]) => void;
+  defaultValue?: string;
+  onChange?: (value: string) => void;
 }
 
 const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }: MultiSelectBoxProps) => {
-  const [options, setOptions] = React.useState<string[]>(defaultValue ?? []);
+  const [options, setOptions] = useState<string[]>(defaultValue ? [defaultValue] : []);
 
   const handleChange = (event: SelectChangeEvent<typeof options>) => {
     const {
@@ -35,6 +35,7 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
 
     if (value.includes('clear')) {
       setOptions(['전체']);
+      onChange && onChange('');
       return;
     }
 
@@ -49,12 +50,7 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
       return;
     }
 
-    if (value.includes('전체')) {
-      onChange(['전체']);
-      return;
-    }
-
-    onChange(value);
+    onChange(typeof value === 'string' ? value : value.join(','));
   };
 
   return (

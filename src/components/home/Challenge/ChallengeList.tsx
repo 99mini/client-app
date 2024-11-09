@@ -32,20 +32,21 @@ const ChallengeList = () => {
         console.error(err);
       });
   }, [selectedCategory, selectedGogun]);
+
   return (
     <div className="challenge-list-container">
       <div className="chanllenge-option">
         <MultiSelectBox
           title={'지역 선택'}
           options={[...GOGUN, '전체']}
-          defaultValue={['전체']}
-          onChange={(value) => typeof value === 'string' && setSelectedGogun(value)}
+          defaultValue={'전체'}
+          onChange={setSelectedGogun}
         />
         <MultiSelectBox
           title={'카테고리 선택'}
           options={[...BIG_CATEGORY, '전체']}
-          defaultValue={['전체']}
-          onChange={(value) => typeof value === 'string' && setSelectedCategory(value)}
+          defaultValue={'전체'}
+          onChange={setSelectedCategory}
         />
       </div>
       <ul className="challenge-list">

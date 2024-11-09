@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
-
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import TextInput from '../textInput/TextInput';
 
@@ -18,6 +18,7 @@ const Form = () => {
   const [pw, setPw] = useState('');
 
   const { refresh } = useProfile();
+  const route = useRouter();
 
   return (
     <Box
@@ -27,14 +28,14 @@ const Form = () => {
       autoComplete="off"
       onSubmit={(e) => {
         e.preventDefault();
+
         axios
           .post('/api/auth/sign-in', { email: email, password: pw })
-          .then((response) => {
-            console.log('로그인 폼');
-            console.log(response);
-            if (response.data.data) {
-              console.log(response.data.data);
-              refresh(response.data.data.accessToken);
+          .then(async (response) => {
+            if (response.data) {
+              await refresh(response.data.accessToken);
+
+              route.replace('/');
             }
           })
           .catch((e) => {

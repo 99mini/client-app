@@ -11,5 +11,6 @@ export async function POST(request: NextRequest) {
     console.error('Failed to sign in');
     return NextResponse.error();
   }
+
   return NextResponse.json(res.data);
 }
