@@ -106,7 +106,7 @@ const SeoulMap = () => {
               padding: '10px 20px',
             }}
           >
-            <Link href="/chalen-log">{'Challenge Seoul'}</Link>
+            <Link href="/challen-log">{'Challenge Seoul'}</Link>
           </Button>
         </Box>
       </div>

@@ -61,7 +61,7 @@ const MissionOpenCard = ({
             </Typography>
             <Typography
               variant="h6"
-              component="p"
+              component="div"
               style={{
                 whiteSpace: 'pre-line',
                 wordBreak: 'break-word',

@@ -33,6 +33,7 @@ const ProfileContainer = () => {
       setBadge(res.data);
     });
   }, [profile]);
+
   return (
     <div className="profile">
       <Card

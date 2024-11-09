@@ -44,7 +44,7 @@ const JoinCard = ({ id, nickName, text, challengeId, maxCount, likeCount }: Prop
               <Typography gutterBottom sx={{ fontSize: 20 }}>
                 <Profile />
               </Typography>
-              <Typography sx={{ fontSize: 15, padding: 1 }} component="div">
+              <Typography sx={{ fontSize: 15, padding: 1 }} component="span">
                 {text}
               </Typography>
               <div className="join-button">
