@@ -91,9 +91,17 @@ const MissionOpenCard = ({
             }}
           >
             {open ? (
-              <Typography>{mission.mission}</Typography>
+              <Typography>{`${mission.mission}`}</Typography>
             ) : (
-              <Button size="small" onClick={() => setOpen(true)}>{`Click to Open!`}</Button>
+              <Button
+                size="small"
+                style={{
+                  backgroundColor: '#FCC4DD',
+                  color: 'black',
+                  padding: '10px 20px',
+                }}
+                onClick={() => setOpen(true)}
+              >{`Click to Open!`}</Button>
             )}
           </CardActions>
         </>
@@ -164,7 +172,11 @@ const MissionCard = () => {
           </div>
         </div>
       )}
-      <Button variant="contained" color="primary" style={{ margin: '0 auto', width: 'fit-content' }}>
+      <Button
+        variant="contained"
+        color="primary"
+        style={{ margin: '0 auto', width: 'fit-content', backgroundColor: '#FCC4DD' }}
+      >
         <Link href={'/'}>{`Let's go Challenge`}</Link>
       </Button>
     </div>

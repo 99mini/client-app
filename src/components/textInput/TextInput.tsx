@@ -1,7 +1,6 @@
 'use client';
 
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
 import './TextInput.css';
 
 interface Props {
@@ -12,8 +11,6 @@ interface Props {
 }
 
 const TextInput = ({ label, value, onChange, type = 'text' }: Props) => {
-  const [data, setData] = useState('');
-
   return (
     <>
       <TextField

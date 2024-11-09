@@ -72,7 +72,12 @@ const Form = () => {
         <TextInput label="Password" value={pw} onChange={setPw} type="password" />
         <br />
         <br />
-        <Button style={{ flex: 1, width: '100%' }} variant="contained" endIcon={<SendIcon />} type="submit">
+        <Button
+          style={{ flex: 1, width: '100%', backgroundColor: '#FCC4DD' }}
+          variant="contained"
+          endIcon={<SendIcon />}
+          type="submit"
+        >
           Send
         </Button>
       </Box>
