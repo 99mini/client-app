@@ -12,7 +12,7 @@ const ChallenLog = () => {
         <span className="reviewCard">
           <div className="titlebar">
             <span className="title" style={{ fontSize: 17, fontWeight: 550 }}>
-              이미 챌린지 성공한 사람의 글
+              {'Succeeded people in the challenge'}
             </span>
             <SetModal />
           </div>

@@ -57,6 +57,14 @@ const ReviewCard = () => {
             </div>
             <div style={{ borderRadius: 12 }}>
               <div className="detail" style={{ display: 'flex', flexDirection: 'column', gap: 12, padding: 12 }}>
+                <div
+                  style={{
+                    fontSize: 25,
+                    fontWeight: 600,
+                  }}
+                >
+                  {'Comment'}
+                </div>
                 {data.boardComments.map((comment) => (
                   <Card key={comment.id} style={{ padding: 12, borderRadius: 16 }}>
                     <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>{comment.nickName}</div>
