@@ -13,6 +13,7 @@ const ChallengeCard = ({ challenge, onClick }: ChallengeCardProps) => {
     <Card className="challenge-card" onClick={onClick}>
       <h2>{challenge.district}</h2>
       <p>{challenge.bigCategory}</p>
+      <p>{challenge.text}</p>
     </Card>
   );
 };

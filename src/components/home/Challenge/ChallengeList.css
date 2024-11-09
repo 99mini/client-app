@@ -1,7 +1,16 @@
-.challenge-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+.challenge-list-container {
+  .chanllenge-option {
+    display: flex;
+    flex-direction: row;
 
-  padding: 16px;
+    justify-content: space-between;
+  }
+
+  .challenge-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    padding: 16px;
+  }
 }

@@ -7,7 +7,6 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  console.log('post');
   const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_HOST}/test`);
   return NextResponse.json(res);
 }

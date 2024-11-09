@@ -1,11 +1,13 @@
 'use client';
 
-import { Card } from '@mui/material';
+import { Button, Card } from '@mui/material';
+import axios from 'axios';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 
 import { ChallengeType, DetailChallengeType } from '@/types/Challenge';
 
-import axios from 'axios';
 import './ChallengeDetailCard.css';
 
 interface ChallengeDetailCardProps {
@@ -20,9 +22,9 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
 
   useEffect(() => {
     if (contentRef.current) {
-      setMaxHeight(`${contentRef.current.scrollHeight}px`);
+      setMaxHeight(`${contentRef.current.scrollHeight + 178}px`);
     }
-  }, [challenge]);
+  }, [challenge, detailChallenge]);
 
   useEffect(() => {
     return () => setMaxHeight('100px');
@@ -30,7 +32,9 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
 
   useEffect(() => {
     axios
-      .get(`/api/challenge?district=${challenge.district}&bigCategory=${challenge.bigCategory}`)
+      .get(`/api/challenge/attractions-by-district-category`, {
+        params: { district: challenge.district, bigCategory: challenge.bigCategory },
+      })
       .then((res) => {
         setDetailChallenge(res.data);
       })
@@ -41,10 +45,32 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
 
   return (
     <Card ref={contentRef} className="challenge-detail-card" style={{ maxHeight: maxHeight }}>
-      <h2>{`${challenge.district} / ${challenge.bigCategory}`}</h2>
-      {Array.from({ length: 5 }, (_, i) => (
-        <div key={i}>star</div>
-      ))}
+      <span>{`${challenge.district} / ${challenge.bigCategory}`}</span>
+      <h2>{challenge.text}</h2>
+      <Image
+        className="mission-thumnail"
+        src={detailChallenge?.imageURL ?? ''}
+        alt={detailChallenge?.mission ?? challenge.text}
+        width={400}
+        height={178}
+      />
+      <div className="mission">
+        <div className="mission-header">
+          <span className="mission-title">{'Mission'}</span>
+          <Button className="mission-button">
+            <Link href={`/challenge/${challenge.id}`}>{'참가 신청 / 미션 확인'}</Link>
+          </Button>
+        </div>
+        <p className="mission-description">{detailChallenge?.mission}</p>
+        <ul className="mission-list">
+          {detailChallenge?.attractions.map((attraction) => (
+            <li key={attraction.id} className="mission-item">
+              <div className="mission-item-title">{attraction.attraction}</div>
+              <div className="mission-item-address">{attraction.address}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </Card>
   );
 };

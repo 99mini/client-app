@@ -3,4 +3,53 @@
 
   overflow: hidden;
   transition: max-height 0.3s ease;
+
+  .mission-thumnail {
+    margin: 0 auto;
+  }
+
+  .mission {
+    .mission-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .mission-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .mission-button {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+    .mission-description {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .mission-list {
+      .mission-item {
+        display: flex;
+        flex-direction: row;
+
+        align-items: flex-end;
+
+        gap: 16px;
+
+        font-size: 1rem;
+        font-weight: 400;
+
+        .mission-item-title {
+          line-height: 150%;
+        }
+
+        .mission-item-address {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
 }

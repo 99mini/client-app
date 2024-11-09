@@ -1,10 +1,16 @@
 export type ChallengeType = {
   id: 0;
   district: 'string';
+  bigCategory: 'string';
+  text: 'string';
   attraction: 'string';
   address: 'string';
-  bigCategory: 'string';
   smallCategory: 'string';
 };
 
-export type DetailChallengeType = {} & ChallengeType;
+export type DetailChallengeType = {
+  imageURL: 'string';
+  text: 'string';
+  mission: 'string';
+  attractions: Omit<ChallengeType, 'text'>[];
+};
