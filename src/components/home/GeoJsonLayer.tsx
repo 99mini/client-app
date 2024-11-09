@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { GeoJSON } from 'react-leaflet';
 
+import center from '@turf/center';
+
 import { SggType } from '@/types/Geo';
+import { LatLng } from 'leaflet';
 
 const GeoJsonLayer = ({ onChange }: { onChange: (sgg: SggType | null) => void }) => {
   const [geoData, setGeoData] = useState(null);
@@ -29,13 +32,19 @@ const GeoJsonLayer = ({ onChange }: { onChange: (sgg: SggType | null) => void })
         fillOpacity: 0.3,
       }}
       onEachFeature={(feature, layer) => {
+        const centroid = center(feature).geometry.coordinates;
+        const [lng, lat] = centroid;
+
         layer.on({
-          mouseover: () => {
+          mouseover: (e) => {
+            const map = e.target._map;
+            const point = map.latLngToLayerPoint(new LatLng(lat, lng));
+
             onChange({
               sgg: feature.properties.sgg as string,
               sggnm: feature.properties.sggnm as string,
+              center: [point.y, point.x],
             });
-            console.log(feature.properties);
           },
           mouseout: () => {
             onChange(null);

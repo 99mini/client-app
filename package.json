@@ -12,6 +12,10 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
+    "@turf/center": "^7.1.0",
     "axios": "^1.7.7",
     "es-hangul": "^2.2.1",
     "leaflet": "^1.9.4",

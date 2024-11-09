@@ -6,6 +6,7 @@ import { MapContainer, TileLayer } from 'react-leaflet';
 
 import { SggType } from '@/types/Geo';
 import GeoJsonLayer from './GeoJsonLayer';
+import SeoulPopup from './SeoulPopup';
 
 import 'leaflet/dist/leaflet.css';
 
@@ -32,21 +33,15 @@ const SeoulMap = () => {
         />
         <GeoJsonLayer onChange={setSgg} />
         {sgg && (
-          <div
+          <SeoulPopup
             style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              padding: '10px',
-              backgroundColor: 'white',
-              border: '1px solid black',
-              borderRadius: '5px',
-              zIndex: 1000,
+              top: sgg.center[0],
+              left: sgg.center[1],
             }}
           >
             <h2>{sgg.sgg}</h2>
             <p>{sgg.sggnm}</p>
-          </div>
+          </SeoulPopup>
         )}
       </MapContainer>
     </div>
