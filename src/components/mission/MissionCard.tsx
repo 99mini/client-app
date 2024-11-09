@@ -52,7 +52,12 @@ const MissionOpenCard = ({
   const [open, setOpen] = useState(false);
   const { profile } = useProfile();
   return (
-    <div className="mission-open-card">
+    <div
+      className="mission-open-card"
+      style={{
+        position: 'absolute',
+      }}
+    >
       <Box sx={{ minWidth: 275 }}>
         <>
           <CardContent style={{ border: 'none' }}>
