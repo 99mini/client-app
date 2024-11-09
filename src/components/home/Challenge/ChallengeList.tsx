@@ -37,13 +37,13 @@ const ChallengeList = () => {
       <div className="chanllenge-option">
         <MultiSelectBox
           title={'지역 선택'}
-          options={GOGUN}
+          options={[...GOGUN, '전체']}
           defaultValue={['전체']}
           onChange={(value) => typeof value === 'string' && setSelectedGogun(value)}
         />
         <MultiSelectBox
           title={'카테고리 선택'}
-          options={BIG_CATEGORY}
+          options={[...BIG_CATEGORY, '전체']}
           defaultValue={['전체']}
           onChange={(value) => typeof value === 'string' && setSelectedCategory(value)}
         />

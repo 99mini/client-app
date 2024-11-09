@@ -1,0 +1,28 @@
+.navbar-header {
+  height: 120px;
+
+  padding: 24px;
+
+  box-sizing: content-box;
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 150%;
+
+    .navbar-leftside {
+      display: flex;
+      flex-direction: row;
+      gap: 24px;
+
+      .nav-link {
+        height: fit-content;
+      }
+    }
+  }
+}

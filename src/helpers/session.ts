@@ -18,6 +18,7 @@ class Session {
     if (!this.token) {
       this.token = localStorage.getItem('session');
     }
+
     return localStorage.getItem('session');
   }
 

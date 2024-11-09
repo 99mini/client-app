@@ -1,18 +1,24 @@
 'use client';
 
+import { useState } from 'react';
+
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-import { useState } from 'react';
-import TextInput from '../textInput/TextInput';
-import './Form.css';
 
-// ReferenceError: localStorage is not defined 에러 발생
+import TextInput from '../textInput/TextInput';
+
+import useProfile from '@/hooks/useProfile';
+
+import './Form.css';
 
 const Form = () => {
   const [email, setEmail] = useState('');
   const [pw, setPw] = useState('');
+
+  const { refresh } = useProfile();
+
   return (
     <Box
       component="form"
@@ -21,12 +27,14 @@ const Form = () => {
       autoComplete="off"
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(email, pw);
         axios
           .post('/api/auth/sign-in', { email: email, password: pw })
           .then((response) => {
-            if (response.status === 200) {
-              console.log('success');
+            console.log('로그인 폼');
+            console.log(response);
+            if (response.data.data) {
+              console.log(response.data.data);
+              refresh(response.data.data.accessToken);
             }
           })
           .catch((e) => {

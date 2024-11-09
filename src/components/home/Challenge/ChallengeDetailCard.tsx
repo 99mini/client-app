@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Card } from '@mui/material';
+import { Button, Card, Skeleton } from '@mui/material';
 import axios from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -47,13 +47,21 @@ const ChallengeDetailCard = ({ challenge }: ChallengeDetailCardProps) => {
     <Card ref={contentRef} className="challenge-detail-card" style={{ maxHeight: maxHeight }}>
       <span>{`${challenge.district} / ${challenge.bigCategory}`}</span>
       <h2>{challenge.text}</h2>
-      <Image
-        className="mission-thumnail"
-        src={detailChallenge?.imageURL ?? ''}
-        alt={detailChallenge?.mission ?? challenge.text}
-        width={400}
-        height={178}
-      />
+      {detailChallenge?.imageURL ? (
+        <Image
+          className="mission-thumnail"
+          src={detailChallenge.imageURL ?? ''}
+          alt={detailChallenge.mission ?? challenge.text}
+          width={400}
+          height={178}
+          style={{
+            width: 'auto',
+            height: 'auto',
+          }}
+        />
+      ) : (
+        <Skeleton className="mission-thumnail" variant="rectangular" width={400} height={178} />
+      )}
       <div className="mission">
         <div className="mission-header">
           <span className="mission-title">{'Mission'}</span>
