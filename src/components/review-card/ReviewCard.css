@@ -7,6 +7,7 @@
   width: fit-content;
 }
 .review-photo {
+  border-radius: 15px;
   width: 100%;
 }
 .detailBox {
