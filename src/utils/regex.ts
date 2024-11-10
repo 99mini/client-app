@@ -11,11 +11,12 @@ export function validateEmail(email: string): boolean {
 }
 
 /**
- * @description Validate password: at least 8 characters, at least one letter and one number
+ * @description Validate password: at least 4 characters,
  * @param password
  * @returns
  */
 export function validatePassword(password: string): boolean {
-  const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{4,}$/;
+
   return re.test(password);
 }

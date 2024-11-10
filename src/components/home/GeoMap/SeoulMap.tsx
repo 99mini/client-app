@@ -24,6 +24,8 @@ const SeoulMap = () => {
   const [sgg, setSgg] = useState<SggType | null>(null);
   const challenge = useChallenge();
 
+  const mission = challenge.find((challen) => challen.district === sgg?.sggnm);
+
   return (
     <div className="seoul-map-layout">
       <div className="seoul-map-sticky">
@@ -81,8 +83,8 @@ const SeoulMap = () => {
                         style={{
                           fontSize: '1rem',
                         }}
-                      >{`Category: ${koreanToEnglishCategory(challenge[0].bigCategory)}`}</Typography>
-                      <Typography variant="h6">{`Mission: ${challenge[0].text}`}</Typography>
+                      >{`Category: ${koreanToEnglishCategory(mission?.bigCategory ?? '')}`}</Typography>
+                      <Typography variant="h6">{`Mission: ${mission?.text}`}</Typography>
                     </>
                   )}
                 </div>

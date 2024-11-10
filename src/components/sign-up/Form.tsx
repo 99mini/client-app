@@ -39,7 +39,7 @@ const Form = () => {
   }
   function PwConfirm() {
     if (!validatePassword(pw)) {
-      alert('Confirm your Password!');
+      alert('password is invalid: at least 4 characters and 1 number');
       setIsValidPw(false);
     } else if (!(pw == pwConfirm)) {
       alert('pw != pwConfirm');
