@@ -70,7 +70,9 @@ const JoinCard = ({ id, nickName, text, challengeId, maxCount, likeCount }: Prop
                         })
                         .then((res) => {
                           if (res.data.status === 200) {
-                            setCount(count + 1);
+                            if (count < maxCount) {
+                              setCount(count + 1);
+                            }
                           }
                         });
                     }}

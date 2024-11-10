@@ -36,14 +36,21 @@ export default function SetModal({ district, bigCategory }: { district?: string;
   const [content, setContent] = useState('');
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    setTitle('');
+    setContent('');
+    setImage(null);
+  };
 
   const { profile } = useProfile();
   const router = useRouter();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && e.target.files.length === 1) {
       setImage(e.target.files[0]);
+    } else {
+      setImage(null);
     }
   };
 
@@ -95,7 +102,7 @@ export default function SetModal({ district, bigCategory }: { district?: string;
   };
 
   return (
-    <span className="container">
+    <div className="container">
       <Button onClick={handleOpen}>Write Review</Button>
       <Fab color="primary" aria-label="edit" style={{ width: 40, height: 40 }} onClick={handleOpen}>
         <EditIcon />
@@ -130,7 +137,7 @@ export default function SetModal({ district, bigCategory }: { district?: string;
                     onChange={onChangeTitle}
                   />
                 </Box>
-                <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={onFileChange} />
+                <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={onFileChange} multiple={false} />
               </div>
               <div className="textArea">
                 <TextField
@@ -151,6 +158,6 @@ export default function SetModal({ district, bigCategory }: { district?: string;
           </Typography>
         </Box>
       </Modal>
-    </span>
+    </div>
   );
 }

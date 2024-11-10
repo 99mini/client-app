@@ -53,8 +53,11 @@ const Form = () => {
               if (!res.accessToken) {
                 return;
               }
-
-              route.replace('/');
+              if (response.data.team !== null) {
+                route.replace('/challen-log');
+              } else {
+                route.replace('/');
+              }
             }
           });
         }}
