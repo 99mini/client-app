@@ -68,9 +68,19 @@ const MultiSelectBox = ({ title, options: givenOptions, defaultValue, onChange }
           input={<OutlinedInput label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
+              {selected.map((value) => {
+                const isCategory = koreanToEnglishCategory(value) != value;
+
+                if (value === 'All') {
+                  return <Chip key={value} label={value} />;
+                }
+                return (
+                  <Chip
+                    key={value}
+                    label={isCategory ? koreanToEnglishCategory(value) : `${romanizeAddress(value)} (${value})`}
+                  />
+                );
+              })}
             </Box>
           )}
           MenuProps={MenuProps}
