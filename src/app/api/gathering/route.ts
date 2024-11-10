@@ -30,3 +30,21 @@ export async function GET(request: NextRequest) {
     return NextResponse.error();
   }
 }
+
+export async function POST(request: NextRequest) {
+  const body = await request.json();
+  const { authorization } = await getCookieData();
+
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_HOST}/gathering`, body, {
+    headers: {
+      Authorization: authorization,
+    },
+  });
+
+  if (!res) {
+    console.error('Failed to sign in');
+    return NextResponse.error();
+  }
+
+  return NextResponse.json(res.data);
+}

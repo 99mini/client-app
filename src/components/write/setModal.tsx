@@ -1,5 +1,7 @@
 'use client';
 
+import useProfile from '@/hooks/useProfile';
+import { koreanToEnglishCategory, romanizeAddress } from '@/utils/i11n';
 import EditIcon from '@mui/icons-material/Edit';
 import SendIcon from '@mui/icons-material/Send';
 import Box from '@mui/material/Box';
@@ -9,6 +11,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import './setModal.css';
 
@@ -25,13 +28,18 @@ const style = {
   p: 4,
 };
 
-export default function SetModal() {
+export default function SetModal({ district, bigCategory }: { district?: string; bigCategory?: string }) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState<File | null>(null);
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const { profile } = useProfile();
+  const router = useRouter();
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -50,23 +58,39 @@ export default function SetModal() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!title || !content || !image) {
+    if (!title || !content || !image || !profile) {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('text', content);
-    formData.append('multipartFile', image);
-
     try {
+      const formData = new FormData();
+
+      formData.append('multipartFile', image);
+      formData.append('title', title);
+      formData.append('text', content);
+      formData.append('district', district ?? '');
+      formData.append('bigCategory', bigCategory ?? '');
+
       const response = await axios.post('/api/boards', formData, {
         headers: {
+          Authorization: `Bearer ${profile.accessToken}`,
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      if (response.status === 200) {
+        alert('Successfully posted.');
+        router.refresh();
+      }
+
+      if (response.data.code === 'CAN_NOT_WRITE') {
+        alert('Posts may only be unique once a day.');
+      }
+
+      setOpen(false);
     } catch (error) {
       console.error(error);
+      setOpen(false);
     }
   };
 
@@ -89,7 +113,7 @@ export default function SetModal() {
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             <div className="modal-container">
               <div>
-                <div className="category">Gangnam-gu/Food</div>
+                <div className="category">{`${romanizeAddress(district ?? '')} (${district}) / ${koreanToEnglishCategory(bigCategory ?? '')}`}</div>
                 <Box
                   component="form"
                   onSubmit={handleSubmit}
@@ -119,7 +143,7 @@ export default function SetModal() {
                   value={content}
                   onChange={onChangeContent}
                 />
-                <Button variant="contained" endIcon={<SendIcon />} type="submit">
+                <Button variant="contained" endIcon={<SendIcon />} onClick={handleSubmit}>
                   Send
                 </Button>
               </div>

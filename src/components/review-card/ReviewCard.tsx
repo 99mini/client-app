@@ -1,37 +1,18 @@
 'use client';
-import useProfile from '@/hooks/useProfile';
-import { useEffect, useState } from 'react';
 
 import { BoardCommentType, BoardType } from '@/types/Board';
 import { Card } from '@mui/material';
-import axios from 'axios';
 import Image from 'next/image';
 import './ReviewCard.css';
 
-const ReviewCard = () => {
-  const { profile } = useProfile();
-  const [board, setBoard] = useState<
-    {
-      board: BoardType;
-      boardComments: BoardCommentType[];
-    }[]
-  >([]);
-
-  useEffect(() => {
-    if (!profile) {
-      return;
-    }
-    axios
-      .get('/api/boards', {
-        headers: {
-          Authorization: `Bearer ${profile.accessToken}`,
-        },
-      })
-      .then((res) => {
-        setBoard(res.data);
-      });
-  }, [profile]);
-
+const ReviewCard = ({
+  board,
+}: {
+  board: {
+    board: BoardType;
+    boardComments: BoardCommentType[];
+  }[];
+}) => {
   return (
     <div
       style={{

@@ -1,4 +1,3 @@
-import { SignRequestType } from '@/types/Auth';
 import axios from 'axios';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
@@ -29,9 +28,16 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const body: SignRequestType = await request.json();
+  const body = await request.formData();
 
-  const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_HOST}/boards`, body);
+  const { authorization } = await getCookieData();
+
+  const res = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_HOST}/boards`, body, {
+    headers: {
+      Authorization: authorization,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 
   if (!res) {
     console.error('Failed to sign in');

@@ -12,4 +12,6 @@ export type ProfileType = {
   level: number;
   challengeCount: number;
   miniGameCount: number;
+  district: string;
+  bigCategory: string;
 };
