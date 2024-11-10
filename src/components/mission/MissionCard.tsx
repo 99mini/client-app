@@ -8,7 +8,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { koreanToEnglishCategory, romanizeAddress } from '@/utils/i11n';
@@ -125,6 +125,8 @@ const MissionCard = () => {
 
   const [mission, setMission] = useState<MissionType | null>(null);
 
+  const router = useRouter();
+
   useEffect(() => {
     if (!profile?.accessToken || !district || !bigCategory) {
       return;
@@ -182,7 +184,22 @@ const MissionCard = () => {
         color="primary"
         style={{ margin: '0 auto', width: 'fit-content', backgroundColor: '#FCC4DD' }}
       >
-        <Link href={'/challen-log'}>{`Let's go Challenge`}</Link>
+        <div
+          onClick={() => {
+            if (profile?.bigCategory != bigCategory || profile?.district != district) {
+              alert('Already challenge is in progress!');
+              router.replace('/challen-log');
+              return;
+            }
+          }}
+        >
+          <Link
+            href={'/challen-log'}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >{`Let's go Challenge`}</Link>
+        </div>
       </Button>
     </div>
   );
