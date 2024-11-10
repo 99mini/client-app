@@ -188,9 +188,9 @@ const MissionCard = () => {
           onClick={() => {
             if (profile?.bigCategory != bigCategory || profile?.district != district) {
               alert('Already challenge is in progress!');
-              router.replace('/challen-log');
-              return;
             }
+
+            router.replace('/challen-log');
           }}
         >
           <Link
