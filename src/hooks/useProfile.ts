@@ -1,7 +1,7 @@
 'use client';
 
 import axios from 'axios';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import session from '@/helpers/session';
 import { ProfileType } from '@/types/Auth';
@@ -48,6 +48,10 @@ const useProfile = () => {
     },
     [setProfile]
   );
+
+  useEffect(() => {
+    refresh();
+  }, [refresh]);
 
   return { profile, refresh };
 };

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import TextInput from '../textInput/TextInput';
@@ -20,11 +20,8 @@ const Form = () => {
   const [pw, setPw] = useState('');
 
   const route = useRouter();
-  const searchParams = useSearchParams();
 
   const { refresh } = useProfile();
-
-  const redirectTo = searchParams.get('redirectTo');
 
   return (
     <Box
@@ -57,13 +54,7 @@ const Form = () => {
                 return;
               }
 
-              if (redirectTo) {
-                const decoded = decodeURIComponent(redirectTo);
-
-                route.replace(decoded);
-              } else {
-                route.replace('/');
-              }
+              route.replace('/');
             }
           });
         }}
